@@ -31,14 +31,12 @@ const Login = () => {
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700"
         />
-        {!isSignIn ? (
+        {!isSignIn && (
           <input
             type="password"
             placeholder="Confirm Password"
             className="p-4 my-4 w-full bg-gray-700"
           />
-        ) : (
-          ""
         )}
         <button className="p-4 my-6 bg-red-700 w-full rounded-lg">
           {isSignIn ? "Sign In" : "Sign Up"}
