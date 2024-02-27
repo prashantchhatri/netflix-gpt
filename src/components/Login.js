@@ -16,7 +16,6 @@ const Login = () => {
 
   const handleClick = () => {
     const message = checkValidData(email.current.value, password.current.value);
-    console.log(confirmPassword.current.value);
     if (confirmPassword.current && (confirmPassword.current.value !== password.current.value)){
       setValidationMessage('Password did not match');
     } else {
