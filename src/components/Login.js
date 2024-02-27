@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
+  const [validationMessage, setValidationMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+  const confirmPassword = useRef(null);
 
   const toggleSignIn = () => {
     setIsSignIn(!isSignIn);
   };
+
+  const handleClick = () => {
+    const message = checkValidData(email.current.value, password.current.value);
+    console.log(confirmPassword.current.value);
+    if (confirmPassword.current && (confirmPassword.current.value !== password.current.value)){
+      setValidationMessage('Password did not match');
+    } else {
+      setValidationMessage(message);
+    }
+  }
 
   return (
     <div>
@@ -17,30 +33,36 @@ const Login = () => {
           alt="logo"
         />
       </div>
-      <form className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
+      <form 
+      onSubmit={(e) => e.preventDefault()}
+      className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
         <h1 className="font-bold text-3xl py-4">
           {isSignIn ? "Sign In" : "Sign Up"}
         </h1>
         <input
+          ref={email}
           type="text"
-          placeholder="Email or Phone number"
+          placeholder="Enter Email"
           className="p-4 my-4 w-full bg-gray-700"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700"
         />
         {!isSignIn && (
           <input
+          ref={confirmPassword}
             type="password"
             placeholder="Confirm Password"
             className="p-4 my-4 w-full bg-gray-700"
           />
         )}
-        <button className="p-4 my-6 bg-red-700 w-full rounded-lg">
+        <button className="p-4 my-6 bg-red-700 w-full rounded-lg" onClick={handleClick}>
           {isSignIn ? "Sign In" : "Sign Up"}
         </button>
+        <p className="p-2 mb-2 w-full text-red-700 text-lg font-bold  ">{validationMessage}</p>
         <p className="cursor-pointer" onClick={toggleSignIn}>
           {isSignIn
             ? "Not registered ? Sign up"
